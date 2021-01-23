@@ -1,0 +1,166 @@
+// Available variables which can be used inside of strings.
+// ${workspaceRoot}: the root folder of the team
+// ${file}: the current opened file
+// ${relativeFile}: the current opened file relative to workspaceRoot
+// ${fileBasename}: the current opened file's basename
+// ${fileDirname}: the current opened file's dirname
+// ${fileExtname}: the current opened file's extension
+// ${cwd}: the current working directory of the spawned process
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "runner": "terminal",
+
+    // Start PowerShell
+    "windows": {
+        "command": "pwsh.exe"
+    },
+    "linux": {
+        "command": "/usr/bin/powershell"
+    },
+    "osx": {
+        "command": "/usr/local/bin/powershell"
+    },
+
+    "args": [
+        "-NoProfile", "-ExecutionPolicy", "Bypass"
+    ],
+
+    // Associate with test task runner
+    "tasks": [
+        {
+            "label": "Clean",
+            "args": [
+                "Invoke-Build -Task Clean"
+            ],
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "clean",
+              "revealProblems": "onProblem"
+            },
+        },
+        {
+            "label": "Build",
+            "args": [
+                "Invoke-Build"
+            ],
+            "runOptions":
+            {
+              "instanceLimit": 1,
+              "runOn": "folderOpen"
+            },
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            },
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "build",
+              "revealProblems": "onProblem"
+            },
+        },
+        {
+            "label": "BuildHelp",
+            "args": [
+                "Invoke-Build -Task BuildDocs"
+            ],
+            "runOptions":
+            {
+              "instanceLimit": 1,
+              "runOn": "folderOpen"
+            },
+            "group": "build",
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "build",
+              "revealProblems": "onProblem"
+            },
+        },
+        {
+            "label": "Analyze",
+            "args": [
+                "Invoke-Build -Task Analyze"
+            ],
+            "group": "build",
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "build",
+              "revealProblems": "onProblem"
+            },
+        },
+        {
+            "label": "Install",
+            "args": [
+                "Invoke-Build -Task Install"
+            ],
+            "group": "build",
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "build",
+              "revealProblems": "onProblem"
+            },
+        },
+        {
+            "label": "Test",
+            "args": [
+                "Invoke-Build -Task Test"
+            ],
+            "problemMatcher": [
+                {
+                    "owner": "powershell",
+                    "fileLocation": ["absolute"],
+                    "severity": "error",
+                    "pattern": [
+                        {
+                            "regexp": "^\\s*(\\[-\\]\\s*.*?)(\\d+)ms\\s*$",
+                            "message": 1
+                        },
+                        {
+                            "regexp": "^\\s+at\\s+[^,]+,\\s*(.*?):\\s+line\\s+(\\d+)$",
+                            "file": 1,
+                            "line": 2
+                        }
+                    ]
+                }
+            ],
+            "group": "build",
+            "presentation": {
+              "echo": true,
+              "reveal": "silent",
+              "focus": false,
+              "panel": "shared",
+              "showReuseMessage": true,
+              "clear": false,
+              "group": "build",
+              "revealProblems": "onProblem"
+            },
+        }
+    ]
+}
+
