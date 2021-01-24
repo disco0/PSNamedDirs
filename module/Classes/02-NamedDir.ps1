@@ -44,6 +44,33 @@ class NamedDirs : Dictionary[String, DirectoryInfo]
         }
     }
 
+    hidden UpdateConfig([string] $Key, [DirectoryInfo] $Value)
+    {
+        # Remove existing entry if defined
+        if(([Dictionary[String, DirectoryInfo]]$this).ContainsKey($Key))
+        {
+            if(([Dictionary[String, DirectoryInfo]]$this).Remove($Key))
+            {
+                throw "Failed to remove $Key entry from NamedDirsDisabled instance."
+            }
+        }
+
+        $this.add($Key, $Value)
+    }
+
+    [void] set([String] $Key, [String] $Path)
+    {
+        # Validate $Path before any modification
+        [DirectoryInfo] $Value = [NamedDirs]::AssertDirectoryExists($Path)
+
+        $this.UpdateConfig($Key, $Value)
+    }
+
+    [void] set([String] $Key, [DirectoryInfo] $Path)
+    {
+        $this.UpdateConfig($Key, $Path)
+    }
+
     #region Static
 
     static [regex] $NamedDirPattern = [regex]::new('^~(?<name>[^\s\n\\\/]+)');
@@ -51,6 +78,22 @@ class NamedDirs : Dictionary[String, DirectoryInfo]
     static [bool] PossibleNamedDir([String] $Path)
     {
         return [NamedDirs]::NamedDirPattern.Match($Path).Success
+    }
+
+    static hidden [DirectoryInfo] AssertDirectoryExists([String] $DirString)
+    {
+        $Resolved = Get-Item -LiteralPath $DirString  `
+            | Where-Object { $_ -is [DirectoryInfo] } `
+            | Select-Object -First 1;
+
+        if($Resolved -is [DirectoryInfo])
+        {
+            return $Resolved
+        }
+        else
+        {
+            throw "Failed to resolve Directory string value to ``DirectoryInfo`` type."
+        }
     }
 
     #endregion Static

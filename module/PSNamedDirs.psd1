@@ -12,7 +12,7 @@
 RootModule = 'PSNamedDirs.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.0'
+ModuleVersion = '0.2.1'
 
 # ID used to uniquely identify this module
 GUID = '601cb82b-9ccc-4e3c-be79-8592a0a6c3fa'

@@ -1,46 +1,35 @@
 # PSNamedDirs
 
-PSNamedDirs is a PowerShell module that needs a description.
+Powershell module implementing [z-shell style named directories](https://sorrell.github.io/2020/03/16/WSL-and-ZSH.html) (to the extent possible in a module).
 
-This project adheres to the Contributor Covenant [code of conduct](https://github.com/disco0/PSNamedDirs/tree/master/docs/CODE_OF_CONDUCT.md).
-By participating, you are expected to uphold this code. Please report unacceptable behavior to __.
+``` powershell
+# zsh Command
+cd ~git/repo
 
-## Features
-
-- Downloadable!
-
-## Documentation
-
-Check out our **[documentation](https://github.com/disco0/PSNamedDirs/tree/master/docs/en-US/PSNamedDirs.md)** for information about how to use this project.
-
-## Installation
-
-### Gallery
-
-```powershell
-Install-Module PSNamedDirs -Scope CurrentUser
+# Equivalent (unaliased)
+Set-NamedLocation ~git/repo
 ```
 
-### Source
+## Configuration (Changes Expected)
 
-```powershell
-git clone 'https://github.com/disco0/PSNamedDirs.git'
-Set-Location .\PSNamedDirs
-Invoke-Build -Task Install
+``` powershell
+$global:PSNamedDirs
+
+Key     Value
+---     -----
+dot     C:\Users\User\dotfile
+dotfile C:\Users\User\dotfile
+pwsh    C:\Users\User\dotfile\pwsh
+gl      C:\Users\User\git.local
+git     C:\Users\User\git
 ```
 
-## Usage
+## Completions (Work in Progress)
 
-### First example
+``` powershell
+Set-NamedLocation ~g|->
+# ~g ~git ~gitlocal ~gl
 
-```powershell
-Import-Module PSNamedDirs
+Set-NamedLocation ~git/r|->
+# ~git/repo1 ~git/repo2 ~git/repo3 ~git/repo4
 ```
-
-Imports PSNamedDirs into the current session.
-
-## Contributions Welcome!
-
-We would love to incorporate community contributions into this project.  If you would like to
-contribute code, documentation, tests, or bug reports, please read our [Contribution Guide](https://github.com/disco0/PSNamedDirs/tree/master/docs/CONTRIBUTING.md) to learn more.
-
