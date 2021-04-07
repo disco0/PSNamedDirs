@@ -15,13 +15,13 @@ Set-NamedLocation ~git/repo
 ``` powershell
 $global:PSNamedDirs
 
-Key     Value
----     -----
-dot     C:\Users\User\dotfile
-dotfile C:\Users\User\dotfile
-pwsh    C:\Users\User\dotfile\pwsh
-gl      C:\Users\User\git.local
-git     C:\Users\User\git
+# Key     Value
+# ---     -----
+# dot     C:\Users\User\dotfile
+# dotfile C:\Users\User\dotfile
+# pwsh    C:\Users\User\dotfile\pwsh
+# gl      C:\Users\User\git.local
+# git     C:\Users\User\git
 ```
 
 ## Completions (Work in Progress)
