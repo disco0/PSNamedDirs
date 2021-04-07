@@ -11,7 +11,6 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "runner": "terminal",
-
     // Start PowerShell
     "windows": {
         "command": "pwsh.exe"
@@ -20,13 +19,14 @@
         "command": "/usr/bin/powershell"
     },
     "osx": {
-        "command": "/usr/local/bin/powershell"
+        "command": "/usr/local/bin/pwsh-preview"
     },
-
     "args": [
-        "-NoProfile", "-ExecutionPolicy", "Bypass"
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command"
     ],
-
     // Associate with test task runner
     "tasks": [
         {
@@ -35,14 +35,14 @@
                 "Invoke-Build -Task Clean"
             ],
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "clean",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "clean",
+                "revealProblems": "onProblem"
             },
         },
         {
@@ -50,46 +50,69 @@
             "args": [
                 "Invoke-Build"
             ],
-            "runOptions":
-            {
-              "instanceLimit": 1,
-              "runOn": "folderOpen"
+            "runOptions": {
+                "instanceLimit": 1,
+                "runOn": "folderOpen"
             },
             "group": {
-              "kind": "build",
-              "isDefault": true
+                "kind": "build",
+                "isDefault": true
             },
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "build",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build",
+                "revealProblems": "onProblem"
             },
+            "options": {
+                "statusbar": {
+                    "label": "Build",
+                    "hide": false,
+                    "tooltip": "Invoke-Build Build"
+                }
+            },
+            "problemMatcher": {
+                "fileLocation": "autoDetect",
+                "source": "pwsh",
+                "owner": "pwsh",
+                "pattern": [
+                    {
+                        "regexp":  "^(ERROR): (.+)$",
+                        "message": 2,
+                        "severity":  1
+                    },
+                    {
+                        "regexp": "^At[ ]+(.+?):(\\d+)(?:[ ]+char:(\\d+))?",
+                        "file": 1,
+                        "line": 2,
+                        "column": 3
+                    }
+                ]
+            }
         },
         {
             "label": "BuildHelp",
             "args": [
                 "Invoke-Build -Task BuildDocs"
             ],
-            "runOptions":
-            {
-              "instanceLimit": 1,
-              "runOn": "folderOpen"
+            "runOptions": {
+                "instanceLimit": 1,
+                "runOn": "folderOpen"
             },
             "group": "build",
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "build",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build",
+                "revealProblems": "onProblem"
             },
         },
         {
@@ -99,14 +122,14 @@
             ],
             "group": "build",
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "build",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build",
+                "revealProblems": "onProblem"
             },
         },
         {
@@ -116,14 +139,14 @@
             ],
             "group": "build",
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "build",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build",
+                "revealProblems": "onProblem"
             },
         },
         {
@@ -134,7 +157,9 @@
             "problemMatcher": [
                 {
                     "owner": "powershell",
-                    "fileLocation": ["absolute"],
+                    "fileLocation": [
+                        "absolute"
+                    ],
                     "severity": "error",
                     "pattern": [
                         {
@@ -151,16 +176,16 @@
             ],
             "group": "build",
             "presentation": {
-              "echo": true,
-              "reveal": "silent",
-              "focus": false,
-              "panel": "shared",
-              "showReuseMessage": true,
-              "clear": false,
-              "group": "build",
-              "revealProblems": "onProblem"
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false,
+                "group": "build",
+                "revealProblems": "onProblem"
             },
         }
     ]
 }
-
+// code: language=jsonc insertSpaces=true tabSize=4

@@ -15,9 +15,12 @@
         "Release": true
     },
 
+    "tasks.statusbar.default.hide": false,
+
     //-------- PowerShell Configuration --------
 
     // Use a custom PowerShell Script Analyzer settings file for this workspace.
     // Relative paths for this setting are always relative to the workspace root dir.
-    "powershell.scriptAnalysis.settingsPath": "ScriptAnalyzerSettings.psd1"
+    "powershell.scriptAnalysis.settingsPath": "ScriptAnalyzerSettings.psd1",
+    "powershell.integratedConsole.useLegacyReadLine": true
 }

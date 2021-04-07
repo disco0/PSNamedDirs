@@ -1,5 +1,7 @@
 #Requires -Module Configuration -Version 6
 
+using namespace System.IO
+
 Import-LocalizedData -BindingVariable Strings -FileName Strings -ErrorAction Ignore
 
 # Get all module components

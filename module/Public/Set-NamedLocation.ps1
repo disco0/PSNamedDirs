@@ -11,10 +11,11 @@ function Set-NamedLocation()
 {
     [CmdletBinding()]
     param(
+        [ValidateDirectoryNamedOrExists()]
         [Parameter(Mandatory, Position = 0)]
-        [ValidateDirectoryExists()]
         [String] $Path
     )
 
-    Microsoft.PowerShell.Management\Set-Location -Path $Global:PSNamedDirs.parse($Path)
+    # Microsoft.PowerShell.Management\Set-Location -Path $Global:PSNamedDirs.parse($Path)
+    Microsoft.PowerShell.Management\Push-Location -Path $Global:PSNamedDirs.parse($Path)
 }

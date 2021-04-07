@@ -1,4 +1,4 @@
-#Requires -Module InvokeBuild, ModuleBuilder, PSScriptAnalyzer, @{ModuleName="Pester";ModuleVersion=5.1}, PlatyPS
+#Requires -Module InvokeBuild, ModuleBuilder, PSScriptAnalyzer, @{ModuleName="Pester";ModuleVersion=5.1}
 
 [CmdletBinding()]
 param()
@@ -81,7 +81,11 @@ task ModuleBuilder {
 
         Build-Module -OutputDirectory $Release               `
                      -Passthru -OutVariable CurrentBuildInfo `
-            | Format-Table -AutoSize -Property Name, ExportedCommands, Version
+            | Format-List -Property Name,Version
+
+        Write-Host -F Magenta "Exported Commands:"
+        ($CurrentBuildInfo.ExportedCommands.GetEnumerator()).ForEach{ "  " + $_.Key } `
+            | Format-List | Out-String -Stream | Write-Host
     }
     finally
     {
@@ -97,6 +101,12 @@ task CopyToRelease {
 }
 
 task BuildDocs -If { $script:Discovery.HasDocs } {
+    # Workaround for handling `ERROR: Assembly with same name is already loaded` error when building
+    if(!(Get-Command New-ExternalHelp -ErrorAction SilentlyContinue))
+    {
+        Import-Module platyPS -ErrorAction SilentlyContinue
+    }
+
     $null = New-ExternalHelp -Path       "$PSScriptRoot\docs\$PSCulture" `
                              -OutputPath ('{0}/{1}' -f $script:Folders.Release, $PSCulture)
 }
